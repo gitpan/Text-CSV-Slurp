@@ -1,0 +1,15 @@
+Revision history for Perl module Text::CSV::Slurp
+
+0.04 Mon Dec 8 2008
+    - let's bundle things properly this time
+
+0.03 Mon Dec 8 2008
+    - update Changes file
+
+0.02 Mon Dec 8 2008
+    - return a true value
+
+0.01 Mon Dec 8 2008
+    - first release with incomplete test suite
+
+
