@@ -74,13 +74,13 @@ sub _from_handle {
   return \@results;
 }
 
-return qw/Ken Dodd's Dad's Dog's Dead/;
+return qw/Open hearts and empty minds/;
 
 __END__
 
 =head1 NAME
 
-CSV::Slurp - turn some CSV in an array of hashes
+Text::CSV::Slurp - convert CSV into an array of hashes
 
 =head1 SUMMARY
 
@@ -89,6 +89,8 @@ a perl data structure for further manipulation. This package does that
 in as few steps as possible.
 
 =head1 USAGE
+
+ use Text::CSV::Slurp;
 
  my $data = Text::CSV::Slurp->load(file       => $filename   [,%options]);
  my $data = Text::CSV::Slurp->load(filehandle => $filehandle [,%options]);
