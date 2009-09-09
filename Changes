@@ -1,18 +1,26 @@
 Revision history for Perl module Text::CSV::Slurp
 
-0.5 Tue Dec 9 2008
+0.6 Wed 9 Sept 2009
+    - More error checking added:
+        - now dies with a intelligible message if:
+            - it can't read an input file
+            - it can't parse the header row successfully
+    - Tests added for the above changes
+    - Update documentation with license and respository information
+
+0.5 Tue 9 Dec 2008
     - tidy up documentation
 
-0.4 Mon Dec 8 2008
+0.4 Mon 8 Dec 2008
     - let's bundle things properly this time
 
-0.3 Mon Dec 8 2008
+0.3 Mon 8 Dec 2008
     - update Changes file
 
-0.2 Mon Dec 8 2008
+0.2 Mon 8 Dec 2008
     - return a true value
 
-0.1 Mon Dec 8 2008
+0.1 Mon 8 Dec 2008
     - first release with incomplete test suite
 
 

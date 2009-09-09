@@ -24,8 +24,8 @@ sub load {
 
   unless (defined $opt{file} || defined $opt{filehandle} || defined $opt{string}) {
     die "Need either a file, filehandle or string to work with";
-  }  
-  
+  }
+
   if (defined $opt{filehandle}) {
     my $io = $opt{filehandle};
     delete $opt{filehandle};
@@ -33,7 +33,7 @@ sub load {
   }
   elsif (defined $opt{file}) {
     my $io = new IO::Handle;
-    open($io, "<$opt{file}");
+    open($io, "<$opt{file}") || die "Could not open $opt{file} $!";
     delete $opt{file};
     return _from_handle($io,\%opt);
   }
@@ -64,13 +64,19 @@ sub _from_handle {
   my $opt = shift;
 
   my $csv = Text::CSV->new($opt);
-  $csv->column_names($csv->getline($io));
+
+  if ( my $head = $csv->getline($io) ) {
+    $csv->column_names( $head );
+  }
+  else {
+    die $csv->error_diag();
+  }
 
   my @results;
   while (my $ref = $csv->getline_hr($io)) {
     push @results, $ref;
   }
-  
+
   return \@results;
 }
 
@@ -97,7 +103,7 @@ in as few steps as possible.
  my $data = Text::CSV::Slurp->load(string     => $string     [,%options]);
 
 Returns an array of hashes. Any extra arguments are passed to L<Text::CSV>.
-The first line of the CSV is assumed to be a header row. Its fields are 
+The first line of the CSV is assumed to be a header row. Its fields are
 used as the keys for each of the hashes.
 
 =head1 METHODS
@@ -120,6 +126,16 @@ Load some CSV from a file, filehandle or string and return an array of hashes
 L<Text::CSV>
 
 L<IO::Handle>
+
+L<Test::Most> - for tests only
+
+=head1 LICENCE
+
+GNU General Public License v3
+
+=head1 SOURCE
+
+Available at L<http://code.google.com/p/perl-text-csv-slurp/>
 
 =head1 SEE ALSO
 
