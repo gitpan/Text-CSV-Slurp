@@ -9,7 +9,7 @@ WriteMakefile(
     AUTHOR       => 'Robbie Bow (robbiebow@cpan.org)',
     ABSTRACT     => 'Turn a chunk of CSV into an array of hashes',
     PREREQ_PM    => {
-                     'Test::Simple' => 0.44,
+                     'Test::Most'   => undef,
                      'Text::CSV'    => 1.06,
                      'IO::Handle'   => undef,
                     },
