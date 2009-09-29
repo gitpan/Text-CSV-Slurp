@@ -61,7 +61,6 @@ Test handling poorly formatted CSV
     my $data = eval {
                 Text::CSV::Slurp->load(file => 't/data/i_dont_exist.csv', allow_whitespace => 1 );
                };
-
-    like $@, qr/No such file or directory/, "Inexistent input file returns intelligible error";
+    like $@, qr^Could not open t/data/i_dont_exist\.csv .+^, "Inexistent input file returns intelligible error";
     is ref($data), '', 'Inexistent input file not parsed';
 }

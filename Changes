@@ -1,5 +1,9 @@
 Revision history for Perl module Text::CSV::Slurp
 
+0.7 Tue 29 Sept 2009
+    - Update tests to take regard of non-English error output
+    - Correct Test::Most version in prereq detail
+
 0.6 Wed 9 Sept 2009
     - More error checking added:
         - now dies with a intelligible message if:
