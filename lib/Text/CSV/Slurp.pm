@@ -8,7 +8,7 @@ use IO::Handle;
 
 use vars qw/$VERSION/;
 
-$VERSION = 0.7;
+$VERSION = 0.8_01;
 
 sub new {
   my $class = shift;
@@ -59,6 +59,50 @@ sub load {
   }
 }
 
+sub create {
+    my ( undef, %arg ) = @_;
+
+    die "Need an an array of hashes input to create CSV from"
+        unless exists $arg{input} &&
+               ref( $arg{input} ) eq 'ARRAY' &&
+               ref( @{ $arg{input} }[0] ) eq 'HASH';
+
+    my $list = $arg{input};
+    delete $arg{input};
+
+    # get the field names
+    my @names = defined $arg{field_order}
+              ? @{ $arg{field_order} }
+              : sort keys %{ $list->[0] };
+
+    delete $arg{field_order};
+
+    %arg = ( binary => 1, %arg );
+
+    my $csv = Text::CSV->new( \%arg );
+
+    unless ( $csv->combine( @names ) ) {
+        die "Failed to create the header row because of this invalid input: " . $csv->error_input;
+    }
+
+    my @string = $csv->string;
+
+    for my $row ( @$list ) {
+        my @data;
+        for my $name ( @names ) {
+            push @data, $row->{$name};
+        }
+
+        unless ( $csv->combine( @data ) ) {
+            die "Failed to create a data row because of this invalid input: " . $csv->error_input;
+        }
+
+        push @string, $csv->string;
+    }
+
+    return join "\n", @string;
+}
+
 sub _from_handle {
   my $io  = shift;
   my $opt = shift;
@@ -94,17 +138,21 @@ I often need to take a CSV file that has a header row and turn it into
 a perl data structure for further manipulation. This package does that
 in as few steps as possible.
 
+I've added a C<create> method in version 0.8 because sometimes you just 
+want to create some bog standard CSV from an array of hashes.
+
 =head1 USAGE
 
  use Text::CSV::Slurp;
+
+ # load data from CSV input
 
  my $data = Text::CSV::Slurp->load(file       => $filename   [,%options]);
  my $data = Text::CSV::Slurp->load(filehandle => $filehandle [,%options]);
  my $data = Text::CSV::Slurp->load(string     => $string     [,%options]);
 
-Returns an array of hashes. Any extra arguments are passed to L<Text::CSV>.
-The first line of the CSV is assumed to be a header row. Its fields are
-used as the keys for each of the hashes.
+ # create CSV from an array of hashes
+ my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes [,%options]);
 
 =head1 METHODS
 
@@ -119,7 +167,24 @@ Instantiate an object.
   my $data = Text::CSV::Slurp->load(file => $filename);
   my $data = $slurp->load(file => $filename);
 
-Load some CSV from a file, filehandle or string and return an array of hashes
+Returns an array of hashes. Any extra arguments are passed to L<Text::CSV>.
+The first line of the CSV is assumed to be a header row. Its fields are
+used as the keys for each of the hashes.
+
+=head2 create
+
+ my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes [,%options]);
+ my $csv = $slurp->create( input => \@array_of_hashes [,%options]);
+
+Creates CSV from an array of hashes. All optional arguments are passed to
+L<Text::CSV> except for C<field_order>, which is used to determine the
+fields and order in which they appear in the CSV. For example:
+
+ my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes, field_order => ['one','three','two'] );
+
+If field_order is not supplied then the sorted keys of the first hash in
+the input are used instead.
+
 
 =head1 DEPENDENCIES
 
