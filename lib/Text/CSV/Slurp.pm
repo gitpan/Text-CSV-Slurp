@@ -8,7 +8,7 @@ use IO::Handle;
 
 use vars qw/$VERSION/;
 
-$VERSION = 0.8_04;
+$VERSION = 0.8_05;
 
 sub new {
   my $class = shift;
@@ -130,7 +130,8 @@ __END__
 
 =head1 NAME
 
-Text::CSV::Slurp - convert CSV into an array of hashes
+Text::CSV::Slurp - convert CSV into an array of hashes, or an array of 
+hashes into CSV
 
 =head1 SUMMARY
 

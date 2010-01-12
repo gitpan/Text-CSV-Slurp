@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:               Text-CSV-Slurp
-version:            0.8_04
-abstract:           Turn a chunk of CSV into an array of hashes
+version:            0.8_05
+abstract:           Turn a chunk of CSV into an array of hashes, or an array of hashes into CSV
 author:
     - Robbie Bow (robbiebow@cpan.org)
 license:            GNU General Public License v3
