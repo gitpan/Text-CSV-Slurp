@@ -5,7 +5,7 @@ use warnings;
 
 use lib 'lib';
 
-use Test::Most tests => 8;
+use Test::Most tests => 2;
 use Text::CSV::Slurp;
 
 my $input  = [
