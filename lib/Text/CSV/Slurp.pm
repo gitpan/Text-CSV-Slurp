@@ -8,7 +8,7 @@ use IO::Handle;
 
 use vars qw/$VERSION/;
 
-$VERSION = 0.8_05;
+$VERSION = 0.8;
 
 sub new {
   my $class = shift;
@@ -130,7 +130,7 @@ __END__
 
 =head1 NAME
 
-Text::CSV::Slurp - convert CSV into an array of hashes, or an array of 
+Text::CSV::Slurp - convert CSV into an array of hashes, or an array of
 hashes into CSV
 
 =head1 SUMMARY
@@ -139,12 +139,13 @@ I often need to take a CSV file that has a header row and turn it into
 a perl data structure for further manipulation. This package does that
 in as few steps as possible.
 
-I've added a C<create> method in version 0.8 because sometimes you just 
+I've added a C<create> method in version 0.8 because sometimes you just
 want to create some bog standard CSV from an array of hashes.
 
 =head1 USAGE
 
  use Text::CSV::Slurp;
+ use strict;
 
  # load data from CSV input
 
@@ -152,8 +153,8 @@ want to create some bog standard CSV from an array of hashes.
  my $data = Text::CSV::Slurp->load(filehandle => $filehandle [,%options]);
  my $data = Text::CSV::Slurp->load(string     => $string     [,%options]);
 
- # create CSV from an array of hashes
- my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes [,%options]);
+ # create a string of CSV from an array of hashes
+ my $csv  = Text::CSV::Slurp->create( input => \@array_of_hashes [,%options]);
 
 =head1 METHODS
 
@@ -177,14 +178,20 @@ used as the keys for each of the hashes.
  my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes [,%options]);
  my $csv = $slurp->create( input => \@array_of_hashes [,%options]);
 
-Creates CSV from an array of hashes. All optional arguments are passed to
-L<Text::CSV> except for C<field_order>, which is used to determine the
-fields and order in which they appear in the CSV. For example:
+ my $file = "/path/to/output/file.csv";
+
+ open( FH, ">$file" ) || die "Couldn't open $file $!";
+ print FH $csv;
+ close FH;
+
+Creates CSV from an array of hashes and returns it as a string. All optional
+arguments are passed to L<Text::CSV> except for C<field_order>, which is used
+to determine the fields and order in which they appear in the CSV. For example:
 
  my $csv = Text::CSV::Slurp->create( input => \@array_of_hashes, field_order => ['one','three','two'] );
 
-If field_order is not supplied then the sorted keys of the first hash in
-the input are used instead.
+If field_order is not supplied then the sorted keys of the first hash in the 
+input are used instead.
 
 
 =head1 DEPENDENCIES
@@ -208,5 +215,9 @@ Available at L<http://code.google.com/p/perl-text-csv-slurp/>
 L<Text::CSV>
 
 L<Spreadsheet::Read>
+
+=head1 THANKS
+
+To Kyle Albritton for suggesting and testing the L<create> method
 
 =cut
