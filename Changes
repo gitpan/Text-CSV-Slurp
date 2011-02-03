@@ -1,5 +1,9 @@
 Revision history for Perl module Text::CSV::Slurp
 
+0.9 Thu 03 Feb 2011
+    - Clarify documentation to resolve
+        https://rt.cpan.org/Public/Bug/Display.html?id=65398
+
 0.8 Mon 11 Jan 2010
     - Add create method
 
