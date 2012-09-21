@@ -1,15 +1,14 @@
-pod2text Text::CSV::Slurp.pm > README
 
-If this is still here it means the programmer was too lazy to create the readme file.
 
-You can create it now by using the command shown above from this directory.
+This archive contains the distribution Text-CSV-Slurp,
+version 1.0:
 
-At the very least you should be able to use this set of instructions
-to install the module...
+  convert CSV into an array of hashes, or an array of
+hashes into CSV
 
-perl Makefile.PL
-make
-make test
-make install
+This software is copyright (c) 2012 by BABF.
 
-If you are on a windows box you should use 'nmake' rather than 'make'.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+
