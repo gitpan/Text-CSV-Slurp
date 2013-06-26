@@ -8,7 +8,7 @@ use IO::File;
 
 use vars qw/$VERSION/;
 
-$VERSION = 1.0;
+$VERSION = 1.01;
 
 sub new {
   my $class = shift;
@@ -207,7 +207,7 @@ GNU General Public License v3
 
 =head1 SOURCE
 
-Available at L<http://code.google.com/p/perl-text-csv-slurp/>
+Available at L<https://github.com/babf/Text-CSV-Slurp>
 
 =head1 SEE ALSO
 
